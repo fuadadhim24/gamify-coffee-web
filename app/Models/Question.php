@@ -9,11 +9,13 @@ class Question extends Model
 {
     use HasFactory;
     protected $table = 'questions';
-    protected $primaryKey = 'question_id'; // Sesuaikan dengan nama primary key yang Anda gunakan
+    protected $primaryKey = 'question_id';
 
     protected $fillable = [
         'id_quiz',
         'content',
+        'created_at', 
+        'updated_at'
     ];
 
     public function quiz()

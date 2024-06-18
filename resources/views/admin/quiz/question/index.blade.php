@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Quiz - Mazer Admin Dashboard</title>
+    <title>Daftar Question - Mazer Admin Dashboard</title>
 
 
 
@@ -90,15 +90,15 @@
 
                             <ul class="submenu ">
 
-                                <li class="submenu-item active">
+                                <li class="submenu-item">
                                     <a href="{{ route('admin.quiz.daftar_quiz.index') }}" class="submenu-link">Daftar
                                         Quiz</a>
                                 </li>
 
                         </li>
 
-                        <li class="submenu-item  ">
-                            <a href="{{ route('admin.quiz.question.index') }}" class="submenu-link">Daftar Pertanyaan</a>
+                        <li class="submenu-item active">
+                            <a href="#" class="submenu-link">Daftar Pertanyaan</a>
 
                         </li>
 
@@ -148,8 +148,9 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Daftar Quiz</h3>
-                        <p class="text-subtitle text-muted">Mengelola quiz yang dapat dikerjakan mahasiswa dengan
+                        <h3>Daftar Question</h3>
+                        <p class="text-subtitle text-muted">Mengelola question sebagai pilihan pertanyaan question yang
+                            dikerjakan mahasiswa dengan
                             menampilkan data pada
                             tabel simpel.</p>
                     </div>
@@ -157,7 +158,7 @@
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">DaftarQuiz</li>
+                                <li class="breadcrumb-item active" aria-current="page">DaftarQuestion</li>
                             </ol>
                         </nav>
                     </div>
@@ -167,9 +168,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">Tabel Daftar Quiz</h5>
+                            <h5 class="card-title mb-0">Tabel Daftar Question</h5>
                             <button type="button" class="btn btn-primary me-1 mb-1" data-bs-toggle="modal"
-                                data-bs-target="#tambahQuizModal">Tambah</a>
+                                data-bs-target="#tambahQuestionModal">Tambah</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -178,27 +179,29 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Quiz</th>
+                                    <th>Isi Pertanyaan</th>
                                     <th>Tanggal Dibuat</th>
                                     <th>Tanggal Diperbarui</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($quizzes as $quiz)
+                                @foreach ($questions as $question)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $quiz->title }}</td>
-                                        <td>{{ $quiz->created_at->format('Y-m-d H:i:s') }}</td>
-                                        <td>{{ $quiz->updated_at ? $quiz->updated_at->format('Y-m-d H:i:s') : '_' }}
+                                        <td>{{ $question->quiz->title }}</td>
+                                        <td>{{ $question->content }}</td>
+                                        <td>{{ $question->created_at->format('Y-m-d H:i:s') }}</td>
+                                        <td>{{ $question->updated_at ? $question->updated_at->format('Y-m-d H:i:s') : '_' }}
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-warning edit-btn"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#editQuizModal{{ $quiz->id_quiz }}"
-                                                data-id="{{ $quiz->id_quiz }}"
-                                                data-title="{{ $quiz->title }}">Edit</a>
+                                                data-bs-target="#editQuestionModal{{ $question->question_id }}"
+                                                data-id="{{ $question->question_id }}"
+                                                data-title="{{ $question->content }}">Edit</a>
                                             <form
-                                                action="{{ route('admin.quiz.daftar_quiz.destroy', ['quiz' => $quiz->id_quiz]) }}"
+                                                action="{{ route('admin.quiz.question.destroy', ['question' => $question->question_id]) }}"
                                                 method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
@@ -208,18 +211,21 @@
                                         </td>
                                     </tr>
                                     <!-- Modal Edit -->
-                                    <div class="modal fade" id="editQuizModal{{ $quiz->id_quiz }}" tabindex="-1"
-                                        aria-labelledby="editQuizModalLabel{{ $quiz->id_quiz }}" aria-hidden="true">
+                                    <div class="modal fade" id="editQuestionModal{{ $question->question_id }}"
+                                        tabindex="-1"
+                                        aria-labelledby="editQuestionModalLabel{{ $question->question_id }}"
+                                        aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title"
-                                                        id="editQuizModalLabel{{ $quiz->id_quiz }}">Edit Quiz</h5>
+                                                        id="editQuestionModalLabel{{ $question->question_id }}">Edit
+                                                        Question</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <form
-                                                    action="{{ route('admin.quiz.daftar_quiz.update', ['quiz' => $quiz->id_quiz]) }}"
+                                                    action="{{ route('admin.quiz.question.update', ['question' => $question->question_id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('PUT')
@@ -229,17 +235,36 @@
                                                                 <div class="card">
                                                                     <div class="card-content">
                                                                         <div class="card-body">
-                                                                            <div class="form-group row">
+                                                                            <div class="form-group">
                                                                                 <label
-                                                                                    for="editJudulQuiz{{ $quiz->id_quiz }}"
-                                                                                    class="col-md-4 col-form-label">Judul
-                                                                                    Quiz</label>
+                                                                                    for="isiQuestion{{ $question->question_id }}"
+                                                                                    class="col-md-4 col-form-label">Isi
+                                                                                    Question</label>
                                                                                 <div class="col-md-8">
                                                                                     <input type="text"
-                                                                                        id="editJudulQuiz{{ $quiz->id_quiz }}"
+                                                                                        id="isiQuestion{{ $question->question_id }}"
                                                                                         class="form-control"
-                                                                                        name="title"
-                                                                                        value="{{ $quiz->title }}">
+                                                                                        name="content"
+                                                                                        value="{{ $question->content }}"
+                                                                                        placeholder="cth: Merawat Tanaman Kopi">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="pilihQuiz"
+                                                                                    class="col-md-4 col-form-label">Pilih
+                                                                                    Quiz</label>
+                                                                                <div class="col-md-8">
+                                                                                    <select class="form-select"
+                                                                                        id="pilihQuiz{{ $question->question_id }}"
+                                                                                        name="id_quiz">
+                                                                                        @foreach ($quizzes as $quiz)
+                                                                                            <option
+                                                                                                value="{{ $quiz->id_quiz }}"
+                                                                                                {{ $question->id_quiz == $quiz->id_quiz ? 'selected' : '' }}>
+                                                                                                {{ $quiz->title }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -259,20 +284,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#tambahQuizModal{{ $quiz->id }}').on('show.bs.modal', function(event) {
-                                                // Lakukan sesuatu saat modal ditampilkan
-                                                console.log('Modal ditampilkan');
-                                            });
-
-                                            $('#tambahQuizModal{{ $quiz->id }}').on('hide.bs.modal', function(event) {
-                                                // Lakukan sesuatu saat modal disembunyikan
-                                                console.log('Modal disembunyikan');
-                                            });
-                                        });
-                                    </script>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -280,16 +293,16 @@
 
             </section>
             <!-- Modal add-->
-            <div class="modal fade" id="tambahQuizModal" tabindex="-1" aria-labelledby="tambahQuizModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="tambahQuestionModal" tabindex="-1"
+                aria-labelledby="tambahQuestionModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="tambahQuizModalLabel">Form Tambah Quiz</h5>
+                            <h5 class="modal-title" id="tambahQuestionModalLabel">Form Tambah Question</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <form action="{{ route('admin.quiz.daftar_quiz.store') }}" method="POST">
+                        <form action="{{ route('admin.quiz.question.store') }}" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -297,13 +310,38 @@
                                         <div class="card">
                                             <div class="card-content">
                                                 <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label for="judulQuiz" class="col-md-4 col-form-label">Judul
-                                                            Quiz</label>
-                                                        <div class="col-md-8">
-                                                            <input type="text" id="judulQuiz" class="form-control"
-                                                                name="title"
-                                                                placeholder="cth: Merawat Tanaman Kopi">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div>
+                                                                <div class="col-md-8">
+                                                                    <label for="isiQuestion"
+                                                                        class="col-md-4 col-form-label">Isi
+                                                                        Question</label>
+                                                                    <div class="col-md-8">
+                                                                        <input type="text" id="isiQuestion"
+                                                                            class="form-control" name="content"
+                                                                            placeholder="cth: Merawat Tanaman Kopi">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="col-md-8">
+                                                                    <label for="pilihQuiz"
+                                                                        class="col-md-4 col-form-label">Pilih
+                                                                        Quiz</label>
+                                                                    <fieldset class="form-group">
+                                                                        <select class="form-select" id="pilihQuiz"
+                                                                            name="id_quiz">
+                                                                            @foreach ($quizzes as $quiz)
+                                                                                <option value="{{ $quiz->id_quiz }}"
+                                                                                    {{ $question->id_quiz == $quiz->id_quiz ? 'selected' : '' }}>
+                                                                                    {{ $quiz->title }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
