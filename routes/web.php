@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
@@ -10,9 +12,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,12 +39,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('daftar-pertanyaan/{question}', [QuestionController::class, 'destroy'])->name('admin.quiz.question.destroy');
 
             Route::get('daftar-jawaban', [OptionController::class, 'index'])->name('admin.quiz.option.index');
+
             Route::get('daftar-jawaban/create', [OptionController::class, 'create'])->name('admin.quiz.option.create');
             Route::post('daftar-jawaban', [OptionController::class, 'store'])->name('admin.quiz.option.store');
             Route::get('daftar-jawaban/{option}', [OptionController::class, 'show'])->name('admin.quiz.option.show');
             Route::get('daftar-jawaban/{option}/edit', [OptionController::class, 'edit'])->name('admin.quiz.option.edit');
             Route::put('daftar-jawaban/{option}', [OptionController::class, 'update'])->name('admin.quiz.option.update');
             Route::delete('daftar-jawaban/{option}', [OptionController::class, 'destroy'])->name('admin.quiz.option.destroy');
+
+            Route::get('daftar-mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
+
         });
 });
 

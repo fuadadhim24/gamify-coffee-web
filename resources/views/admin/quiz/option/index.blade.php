@@ -30,8 +30,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="index.html"><img src="{{ asset('mazer') }}/assets/compiled/svg/logo.svg"
-                                    alt="Logo" srcset=""></a>
+                            <img src="{{ asset('assets/ic/ic_logokopi_lands.png') }}" height="35" />
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -115,7 +114,7 @@
 
                     </li>
                     <li class="sidebar-item">
-                        <a href="form-layout.html" class='sidebar-link'>
+                        <a href="{{ route('admin.mahasiswa.index') }}" class='sidebar-link'>
                             <i class="bi bi-file-earmark-medical-fill"></i>
                             <span>Data Mahasiswa</span>
                         </a>
@@ -123,15 +122,18 @@
 
                     </li>
                     </ul>
-                    <ul class="menu">
+                    <ul class="menu" style="margin-top: 350px">
                         <li class="sidebar-item mt-4">
-                            <a href="form-layout.html" class='sidebar-link'>
-
-                                <i class="bi bi-person-badge-fill"></i>
-                                <span>Keluar</span>
-                            </a>
-
-
+                            @auth
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="" class="sidebar-link"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                        <i class="bi"></i>
+                                        <span>Keluar</span>
+                                    </a>
+                                </form>
+                            @endauth
                         </li>
                     </ul>
                 </div>
@@ -416,7 +418,7 @@
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
-                    <p>2024 &copy; SIPKopi</p>
+                    <p>2024 &copy; SIP Coffee</p>
                 </div>
                 <div class="float-end">
                     <p>Crafted by <a href="https://polije.ac.id" target="_blank">Politeknik Negeri Jember</a></p>

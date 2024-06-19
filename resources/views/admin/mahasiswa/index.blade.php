@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Quiz - SIPKopi Admin Dashboard</title>
+    <title>Daftar Mahasiswa - SIPKopi Admin Dashboard</title>
 
 
 
@@ -30,7 +30,8 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <img src="{{ asset('assets/ic/ic_logokopi_lands.png') }}" height="35" />    
+                            <a href="index.html"><img src="{{ asset('mazer') }}/assets/compiled/svg/logo.svg"
+                                    alt="Logo" srcset=""></a>
                         </div>
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -89,7 +90,7 @@
 
                             <ul class="submenu ">
 
-                                <li class="submenu-item active">
+                                <li class="submenu-item">
                                     <a href="{{ route('admin.quiz.daftar_quiz.index') }}" class="submenu-link">Daftar
                                         Quiz</a>
                                 </li>
@@ -110,15 +111,12 @@
                     </ul>
 
                     <li class="sidebar-title">Manajemen Akun</li>
-
-
                     </li>
-                    <li class="sidebar-item">
+                    <li class="sidebar-item active">
                         <a href="{{ route('admin.mahasiswa.index') }}" class='sidebar-link'>
                             <i class="bi bi-file-earmark-medical-fill"></i>
                             <span>Data Mahasiswa</span>
                         </a>
-
                     </li>
                     </ul>
                     <ul class="menu" style="margin-top: 350px">
@@ -150,16 +148,16 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Daftar Quiz</h3>
-                        <p class="text-subtitle text-muted">Mengelola quiz yang dapat dikerjakan mahasiswa dengan
-                            menampilkan data pada
+                        <h3>Daftar Mahasiswa</h3>
+                        <p class="text-subtitle text-muted">Melihat hasil nilai mahasiswa yang ditampilkan berbentuk
+                            data pada
                             tabel simpel.</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">DaftarQuiz</li>
+                                <li class="breadcrumb-item active" aria-current="page">DaftarMahasiswa</li>
                             </ol>
                         </nav>
                     </div>
@@ -169,9 +167,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">Tabel Daftar Quiz</h5>
-                            <button type="button" class="btn btn-primary me-1 mb-1" data-bs-toggle="modal"
-                                data-bs-target="#tambahQuizModal">Tambah</a>
+                            <h5 class="card-title mb-0">Tabel Daftar Nilai Mahasiswa</h5>
                         </div>
                     </div>
                     <div class="card-body">
@@ -179,102 +175,13 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Quiz</th>
+                                    <th>Nama Mahasiswa</th>
                                     <th>Tanggal Dibuat</th>
                                     <th>Tanggal Diperbarui</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($quizzes as $quiz)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $quiz->title }}</td>
-                                        <td>{{ $quiz->created_at ? $quiz->created_at->format('Y-m-d H:i:s') : '_' }}
-                                        <td>{{ $quiz->updated_at ? $quiz->updated_at->format('Y-m-d H:i:s') : '_' }}
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-warning edit-btn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#editQuizModal{{ $quiz->id_quiz }}"
-                                                data-id="{{ $quiz->id_quiz }}"
-                                                data-title="{{ $quiz->title }}">Edit</a>
-                                            <form
-                                                action="{{ route('admin.quiz.daftar_quiz.destroy', ['quiz' => $quiz->id_quiz]) }}"
-                                                method="POST" style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <!-- Modal Edit -->
-                                    <div class="modal fade" id="editQuizModal{{ $quiz->id_quiz }}" tabindex="-1"
-                                        aria-labelledby="editQuizModalLabel{{ $quiz->id_quiz }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title"
-                                                        id="editQuizModalLabel{{ $quiz->id_quiz }}">Edit Quiz</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <form
-                                                    action="{{ route('admin.quiz.daftar_quiz.update', ['quiz' => $quiz->id_quiz]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="card">
-                                                                    <div class="card-content">
-                                                                        <div class="card-body">
-                                                                            <div class="form-group row">
-                                                                                <label
-                                                                                    for="editJudulQuiz{{ $quiz->id_quiz }}"
-                                                                                    class="col-md-4 col-form-label">Judul
-                                                                                    Quiz</label>
-                                                                                <div class="col-md-8">
-                                                                                    <input type="text"
-                                                                                        id="editJudulQuiz{{ $quiz->id_quiz }}"
-                                                                                        class="form-control"
-                                                                                        name="title"
-                                                                                        value="{{ $quiz->title }}">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button"
-                                                            class="btn btn-light-secondary me-1 mb-1"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary me-1 mb-1">Save
-                                                            changes</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#tambahQuizModal{{ $quiz->id }}').on('show.bs.modal', function(event) {
-                                                // Lakukan sesuatu saat modal ditampilkan
-                                                console.log('Modal ditampilkan');
-                                            });
-
-                                            $('#tambahQuizModal{{ $quiz->id }}').on('hide.bs.modal', function(event) {
-                                                // Lakukan sesuatu saat modal disembunyikan
-                                                console.log('Modal disembunyikan');
-                                            });
-                                        });
-                                    </script>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -282,16 +189,16 @@
 
             </section>
             <!-- Modal add-->
-            <div class="modal fade" id="tambahQuizModal" tabindex="-1" aria-labelledby="tambahQuizModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="tambahMahasiswaModal" tabindex="-1"
+                aria-labelledby="tambahMahasiswaModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="tambahQuizModalLabel">Form Tambah Quiz</h5>
+                            <h5 class="modal-title" id="tambahMahasiswaModalLabel">Form Tambah Mahasiswa</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <form action="{{ route('admin.quiz.daftar_quiz.store') }}" method="POST">
+                        <form {{-- action="{{ route('admin.mahasiswa.daftar_mahasiswa.store') }}"  --}} method="POST">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -300,11 +207,12 @@
                                             <div class="card-content">
                                                 <div class="card-body">
                                                     <div class="form-group row">
-                                                        <label for="judulQuiz" class="col-md-4 col-form-label">Judul
-                                                            Quiz</label>
+                                                        <label for="judulMahasiswa"
+                                                            class="col-md-4 col-form-label">Judul
+                                                            Mahasiswa</label>
                                                         <div class="col-md-8">
-                                                            <input type="text" id="judulQuiz" class="form-control"
-                                                                name="title"
+                                                            <input type="text" id="judulMahasiswa"
+                                                                class="form-control" name="title"
                                                                 placeholder="cth: Merawat Tanaman Kopi">
                                                         </div>
                                                     </div>
@@ -329,7 +237,7 @@
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
-                    <p>2024 &copy; SIP Coffee</p>
+                    <p>2024 &copy; SIPKopi</p>
                 </div>
                 <div class="float-end">
                     <p>Crafted by <a href="https://polije.ac.id" target="_blank">Politeknik Negeri Jember</a></p>
