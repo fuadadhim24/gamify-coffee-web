@@ -14,7 +14,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = Question::with('quiz')->get();
-        $quizzes = Quiz::all(); // Ambil semua quiz yang tersedia
+        $quizzes = Quiz::all(); 
         // dd($questions);
         return view('admin.quiz.question.index', compact('questions', 'quizzes'));
     }

@@ -24,11 +24,12 @@
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div width='80' height="48" class="logo">
+                        <img src="{{ asset('assets/ic/ic_logokopi.png') }}" height="48"/>
+                        {{-- <div width='80' height="48" class="logo">
                             <a width='80' height="48" href="{{ route('dashboard') }}"><img width='80'
                                     height="48" src="{{ asset('assets') }}/ic/ic_logokopi.png" alt="Logo"
                                     srcset=""></a>
-                        </div>
+                        </div> --}}
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
@@ -94,12 +95,12 @@
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Daftar Pertanyaan</a>
+                            <a href="{{ route('admin.quiz.question.index') }}" class="submenu-link">Daftar Pertanyaan</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Jawaban</a>
+                            <a href="{{ route('admin.quiz.option.index') }}" class="submenu-link">Jawaban</a>
 
                         </li>
 
@@ -417,7 +418,7 @@
                     <div class="float-start">
                         <p>2023 &copy; Mazer</p>
                     </div>
-                    <div class="float-end">
+                    <div class="float-end"> 
                         <p>Crafted by <a href="https://polije.ac.id" target="_blank">Politeknik Negeri Jember</a></p>
                     </div>
                 </div>

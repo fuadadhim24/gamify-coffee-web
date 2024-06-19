@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
@@ -36,6 +37,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('daftar-pertanyaan/{question}/edit', [QuestionController::class, 'edit'])->name('admin.quiz.question.edit');
             Route::put('daftar-pertanyaan/{question}', [QuestionController::class, 'update'])->name('admin.quiz.question.update');
             Route::delete('daftar-pertanyaan/{question}', [QuestionController::class, 'destroy'])->name('admin.quiz.question.destroy');
+
+            Route::get('daftar-jawaban', [OptionController::class, 'index'])->name('admin.quiz.option.index');
+            Route::get('daftar-jawaban/create', [OptionController::class, 'create'])->name('admin.quiz.option.create');
+            Route::post('daftar-jawaban', [OptionController::class, 'store'])->name('admin.quiz.option.store');
+            Route::get('daftar-jawaban/{option}', [OptionController::class, 'show'])->name('admin.quiz.option.show');
+            Route::get('daftar-jawaban/{option}/edit', [OptionController::class, 'edit'])->name('admin.quiz.option.edit');
+            Route::put('daftar-jawaban/{option}', [OptionController::class, 'update'])->name('admin.quiz.option.update');
+            Route::delete('daftar-jawaban/{option}', [OptionController::class, 'destroy'])->name('admin.quiz.option.destroy');
         });
 });
 

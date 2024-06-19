@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Question - Mazer Admin Dashboard</title>
+    <title>Daftar Question - SIPKopi Admin Dashboard</title>
 
 
 
@@ -98,12 +98,13 @@
                         </li>
 
                         <li class="submenu-item active">
-                            <a href="#" class="submenu-link">Daftar Pertanyaan</a>
+                            <a href="{{ route('admin.quiz.question.index') }}" class="submenu-link">Daftar
+                                Pertanyaan</a>
 
                         </li>
 
                         <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Jawaban</a>
+                            <a href="{{ route('admin.quiz.option.index') }}" class="submenu-link">Jawaban</a>
 
                         </li>
 
@@ -191,7 +192,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $question->quiz->title }}</td>
                                         <td>{{ $question->content }}</td>
-                                        <td>{{ $question->created_at->format('Y-m-d H:i:s') }}</td>
+                                        <td>{{ $question->created_at ? $question->created_at->format('Y-m-d H:i:s') : '_' }}
                                         <td>{{ $question->updated_at ? $question->updated_at->format('Y-m-d H:i:s') : '_' }}
                                         </td>
                                         <td>
