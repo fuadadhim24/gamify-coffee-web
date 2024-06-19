@@ -1,1 +1,1 @@
-<img src="{{ asset('assets/ic/ic_logokopi_lands.png') }}" class="h-20" />
+<img src="{{ asset('assets/ic/ic_logokopi.png') }}" class="h-20" />
