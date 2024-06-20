@@ -171,12 +171,17 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Mahasiswa</th>
-                                    <th>Tanggal Dibuat</th>
-                                    <th>Tanggal Diperbarui</th>
-                                    <th>Aksi</th>
+                                    <th>User</th>
+                                    <th>Skor</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                @foreach ($results as $result)
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $result->user }}</td>
+                                <td>{{ $result->skor }}</td>
+                                @endforeach
+                            </tbody>
                             <tbody>
                             </tbody>
                         </table>
